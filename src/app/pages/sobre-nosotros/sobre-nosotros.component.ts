@@ -51,8 +51,7 @@ export class SobreNosotrosComponent implements OnInit {
     'WhatsApp Image 2026-06-03 at 10.45.56 AM.jpeg',
     'WhatsApp Image 2026-06-03 at 10.46.30 AM.jpeg',
     'WhatsApp Image 2026-06-03 at 10.46.42 AM.jpeg',
-    'WhatsApp Image 2026-06-03 at 10.49.06 AM.jpeg',
-    'WhatsApp Image 2026-06-03 at 10.52.39 AM.jpeg'
+    'WhatsApp Image 2026-06-03 at 10.49.06 AM.jpeg'
   ];
 
   photoGroups: Array<{ title: string; images: string[] }> = [];
