@@ -1,0 +1,243 @@
+.music-section {
+  --sage: #648366;
+  --rose: #b96f88;
+  --lavender: #8e86bf;
+  --stone: #5d534b;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(100, 131, 102, 0.2);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(255, 226, 214, 0.62), transparent 34%),
+    radial-gradient(circle at 8% 16%, rgba(207, 223, 205, 0.62), transparent 40%),
+    linear-gradient(155deg, #fff8f2 0%, #f7fbf6 100%);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #648366;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.music-section h3 {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.35rem, 4vw, 1.9rem);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.music-lead {
+  margin: 0.4rem 0 0;
+  color: #5d534b;
+}
+
+.music-layout {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(260px, 1.1fr);
+  gap: 0.85rem;
+}
+
+.music-form,
+.music-list {
+  border: 1px solid rgba(100, 131, 102, 0.24);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+label {
+  display: block;
+  margin-top: 0.65rem;
+  font-size: 0.86rem;
+  color: #5f5550;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  margin-top: 0.3rem;
+  border: 1px solid rgba(100, 131, 102, 0.3);
+  border-radius: 10px;
+  padding: 0.56rem 0.62rem;
+  font: inherit;
+  background: #fff;
+}
+
+button {
+  margin-top: 0.8rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.62rem 1rem;
+  background: linear-gradient(135deg, #b96f88, #d38aa5);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.music-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.music-error {
+  margin: 0.65rem 0 0;
+  border-radius: 10px;
+  border: 1px solid rgba(156, 76, 56, 0.3);
+  background: rgba(252, 238, 234, 0.9);
+  color: #7d3f31;
+  padding: 0.5rem 0.62rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.music-list h4 {
+  margin: 0;
+}
+
+.empty {
+  margin: 0.7rem 0 0;
+  color: #6a5f58;
+}
+
+.music-item {
+  margin-top: 0.7rem;
+  border: 1px solid rgba(100, 131, 102, 0.24);
+  border-radius: 12px;
+  padding: 0.65rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(245, 250, 244, 0.8));
+}
+
+.music-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.music-title {
+  margin: 0;
+  font-weight: 700;
+  color: #4f4640;
+}
+
+.music-artist {
+  margin: 0.2rem 0 0;
+  color: #6b625b;
+  font-size: 0.9rem;
+}
+
+.remove {
+  margin: 0;
+  padding: 0.44rem 0.75rem;
+  background: #9c4c38;
+}
+
+.remove-music {
+  width: auto;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.delete-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(22, 19, 23, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.delete-confirm-modal {
+  width: min(360px, 94vw);
+  border-radius: 16px;
+  border: 1px solid rgba(146, 136, 192, 0.35);
+  padding: 1rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(248, 245, 255, 0.94));
+  box-shadow: 0 16px 36px rgba(35, 29, 46, 0.34);
+  text-align: center;
+}
+
+.delete-confirm-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 18px rgba(31, 27, 44, 0.24);
+}
+
+.delete-confirm-modal h4 {
+  margin: 0.65rem 0 0;
+  font-size: 1.2rem;
+  color: #594e47;
+}
+
+.delete-confirm-modal p {
+  margin: 0.38rem 0 0;
+  color: #675c55;
+  font-size: 0.9rem;
+}
+
+.delete-confirm-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-confirm-delete,
+.btn-cancel-delete {
+  margin: 0;
+  width: auto;
+  min-width: 118px;
+}
+
+.btn-confirm-delete {
+  background: linear-gradient(135deg, #9c4c38, #bf6650);
+}
+
+.btn-cancel-delete {
+  background: rgba(95, 127, 99, 0.12);
+  color: #435946;
+  border: 1px solid rgba(95, 127, 99, 0.22);
+}
+
+@media (max-width: 860px) {
+  .music-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .music-section,
+  .music-form,
+  .music-list {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .delete-confirm-actions button {
+    width: auto;
+  }
+
+  .remove-music {
+    width: auto;
+  }
+
+  input {
+    font-size: 0.95rem;
+  }
+}

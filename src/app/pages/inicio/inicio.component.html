@@ -1,0 +1,96 @@
+﻿<section class="overlay-flow" aria-label="Contenido completo de la invitacion">
+  <article class="section-card" *ngFor="let section of sectionCards">
+    <div
+      *ngIf="section.key === 'inicio'; else collapsibleSummary"
+      class="section-summary section-summary-static expanded"
+    >
+      <span class="section-icon" aria-hidden="true">{{ section.icon }}</span>
+      <span class="section-main">
+        <span class="section-title">{{ section.title }}</span>
+        <span class="section-subtitle">{{ section.subtitle }}</span>
+        <span class="section-text">{{ section.summary }}</span>
+      </span>
+      <img class="section-corner-photo" [src]="section.cardImage" [alt]="'Foto decorativa de ' + section.title" loading="lazy" />
+    </div>
+
+    <ng-template #collapsibleSummary>
+      <button
+      type="button"
+      class="section-summary"
+      [class.expanded]="isSectionExpanded(section.key)"
+      [attr.aria-expanded]="isSectionExpanded(section.key)"
+      (click)="toggleSection(section.key)"
+    >
+      <span class="section-icon" aria-hidden="true">{{ section.icon }}</span>
+      <span class="section-main">
+        <span class="section-title">{{ section.title }}</span>
+        <span class="section-subtitle">{{ section.subtitle }}</span>
+        <span class="section-text">{{ section.summary }}</span>
+      </span>
+      <img class="section-corner-photo" [src]="section.cardImage" [alt]="'Foto decorativa de ' + section.title" loading="lazy" />
+      <span class="section-chevron" aria-hidden="true">{{ isSectionExpanded(section.key) ? '−' : '+' }}</span>
+      </button>
+    </ng-template>
+
+    <div class="section-content" *ngIf="section.key === 'inicio' || isSectionExpanded(section.key)">
+      <ng-container [ngSwitch]="section.key">
+        <section class="hero" *ngSwitchCase="'inicio'">
+          <div class="hero-card hero-welcome">
+            <div class="hero-icons" aria-hidden="true">
+              <span>🌿</span>
+              <span>💐</span>
+              <span>✨</span>
+            </div>
+
+            <p class="eyebrow">Nos casamos</p>
+            <p class="welcome-message">
+              ¡Bienvenidos! Estamos muy felices de unir nuestras vidas y queremos que seas parte de esta ocasion tan especial,
+              por eso queremos invitarte a que nos acompanes a celebrar.
+            </p>
+            <p class="welcome-message welcome-message-secondary">
+              A continuacion encontraras informacion del lugar, confirmacion y una seccion de nuestras fotos.
+            </p>
+            <div class="event-details">
+              <img src="/assets/img/PDF/foto.jpeg" alt="Event Details" style="max-width: 50%; height: auto;" />
+            </div>
+          </div>
+
+          <div class="hero-card countdown-card">
+            <p class="countdown-title">¡Faltan solo...!</p>
+            <div class="countdown-grid">
+              <article>
+                <h3>{{ countdown.days }}</h3>
+                <p>dias</p>
+              </article>
+              <article>
+                <h3>{{ countdown.hours }}</h3>
+                <p>horas</p>
+              </article>
+              <article>
+                <h3>{{ countdown.minutes }}</h3>
+                <p>min</p>
+              </article>
+              <article>
+                <h3>{{ countdown.seconds }}</h3>
+                <p>seg</p>
+              </article>
+            </div>
+
+            <div class="calendar-cta">
+              <a class="calendar-btn" [href]="googleCalendarUrl" target="_blank" rel="noopener">
+                Agendar en Google Calendar
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <app-sobre-nosotros *ngSwitchCase="'sobre-nosotros'"></app-sobre-nosotros>
+        <app-lugar-boda *ngSwitchCase="'lugar'"></app-lugar-boda>
+        <app-nuestros-regalos *ngSwitchCase="'regalos'"></app-nuestros-regalos>
+        <app-confirmacion-boda *ngSwitchCase="'confirmacion'"></app-confirmacion-boda>
+        <app-canciones-sugeridas *ngSwitchCase="'canciones'"></app-canciones-sugeridas>
+        <app-fotos-invitados *ngSwitchCase="'fotos'"></app-fotos-invitados>
+      </ng-container>
+    </div>
+  </article>
+</section>

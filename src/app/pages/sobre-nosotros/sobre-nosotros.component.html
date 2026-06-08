@@ -1,0 +1,55 @@
+﻿<section class="about">
+
+  <div class="story-section">
+    <div class="story-badge">💛 Nuestra Historia 💛</div>
+    <h2>Todo empezó un septiembre de 2016</h2>
+    <p class="story-text">
+      Todo comenzó en un inesperado septiembre de 2016, cuando el destino decidió cruzar
+      nuestros caminos de la forma menos pensada. No nos tomó mucho tiempo saber que éramos
+      el uno para el otro, y el <strong>29 de octubre de 2016</strong> grabamos nuestra fecha
+      de inicio: el día en que empezamos a pololear y a escribir esta historia juntos.
+    </p>
+    <p class="story-text">
+      Desde ese momento, la vida se transformó en una aventura constante. Hemos recorrido
+      caminos nuevos, compartido viajes inolvidables, llenado la casa de carcajadas infinitas
+      y, sobre todo, nos hemos sostenido con más fuerza en los momentos difíciles. En este viaje
+      no hemos estado solos; nuestras queridas mascotas han sido cómplices de cada paso,
+      llenando nuestros días de pelos, ladridos, patitas y un amor incondicional que hace
+      nuestro hogar un lugar único.
+    </p>
+    <p class="story-text">
+      Hoy, mirando hacia atrás, nos damos cuenta de que cada foto y cada recuerdo nos ha traído
+      hasta aquí, listos para el siguiente gran capítulo. A continuación puedes ver algunas
+      fotos de cómo hemos ido creciendo. 📸
+    </p>
+  </div>
+
+  <div class="quad-section">
+    <div class="quad-container">
+      <article class="quad-card" *ngFor="let group of photoGroups; let i = index" [style.--group-index]="i" [style.--card-hue]="cardHues[i % cardHues.length]">
+        <div class="quad-grid">
+          <figure class="quad-photo" *ngFor="let img of group.images; let j = index" [style.--photo-index]="j">
+            <img
+              [src]="'/assets/img/FotosJuntos/' + img"
+              [alt]="group.title"
+              (click)="openQuadImage(img, group.title)"
+            />
+          </figure>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="quad-lightbox" *ngIf="selectedQuadImage" (click)="closeQuadImage()">
+    <div class="quad-lightbox-panel" (click)="$event.stopPropagation()">
+      <button class="quad-lightbox-close" type="button" (click)="closeQuadImage()" aria-label="Cerrar imagen">
+        x
+      </button>
+      <img [src]="'/assets/img/FotosJuntos/' + selectedQuadImage" [alt]="selectedQuadTitle" class="quad-lightbox-image" />
+    </div>
+  </div>
+
+  <div class="closing-message">
+    <p>🌸 Lo mejor está por venir... 🌸</p>
+  </div>
+</section>

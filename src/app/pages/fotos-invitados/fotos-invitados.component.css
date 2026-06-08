@@ -1,0 +1,333 @@
+.guest-photos {
+  --sage: #648366;
+  --rose: #b96f88;
+  --stone: #5d534b;
+  padding: 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(100, 131, 102, 0.2);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(255, 226, 214, 0.62), transparent 34%),
+    radial-gradient(circle at 8% 16%, rgba(207, 223, 205, 0.62), transparent 40%),
+    linear-gradient(155deg, #fff8f2 0%, #f7fbf6 100%);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sage);
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+h2 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.lead {
+  margin: 0.45rem 0 0;
+  color: var(--stone);
+}
+
+.upload-card {
+  margin-top: 1rem;
+  border: 1px solid rgba(142, 134, 191, 0.25);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.94), rgba(247, 241, 249, 0.78));
+  box-shadow: 0 7px 18px rgba(92, 96, 122, 0.08);
+}
+
+.upload-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.upload-topbar p {
+  margin: 0;
+  color: #605550;
+  font-size: 0.86rem;
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropzone {
+  margin-top: 0.75rem;
+  border: 2px dashed rgba(142, 134, 191, 0.45);
+  border-radius: 14px;
+  padding: 1.15rem 0.95rem;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 238, 0.88));
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dropzone:hover {
+  border-color: rgba(100, 131, 102, 0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 9px 18px rgba(92, 96, 122, 0.1);
+}
+
+.dropzone.drag-active {
+  border-color: rgba(185, 111, 136, 0.75);
+  background: linear-gradient(160deg, rgba(255, 247, 248, 0.98), rgba(247, 241, 249, 0.9));
+}
+
+.dropzone-icon {
+  font-size: 1.5rem;
+}
+
+.dropzone-title {
+  color: #4d4540;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.dropzone-subtitle {
+  color: #6f635c;
+  font-size: 0.84rem;
+}
+
+.upload-pill {
+  margin-top: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0.42rem 0.82rem;
+  background: linear-gradient(135deg, #b96f88, #d38aa5);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.hint {
+  margin: 0.55rem 0 0;
+  font-size: 0.84rem;
+  color: #6f635c;
+}
+
+.feedback {
+  margin-top: 0.6rem;
+  padding: 0.52rem 0.64rem;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 131, 102, 0.26);
+  background: rgba(233, 247, 234, 0.88);
+  color: #3f6544;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.feedback.error {
+  border-color: rgba(156, 76, 56, 0.3);
+  background: rgba(252, 238, 234, 0.9);
+  color: #7d3f31;
+}
+
+.remove-btn {
+  margin-top: 0.7rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 0.86rem;
+  background: linear-gradient(135deg, #9c4c38, #bf6650);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.empty {
+  margin: 0.95rem 0 0;
+  color: #6a5f58;
+}
+
+.photos-grid {
+  margin-top: 0.95rem;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+.photo-card {
+  border: 1px solid rgba(100, 131, 102, 0.24);
+  border-radius: 12px;
+  padding: 0.62rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(245, 250, 244, 0.8));
+  display: grid;
+  gap: 0.52rem;
+}
+
+.photo-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.photo-info {
+  min-width: 0;
+}
+
+.photo-name {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #4d4540;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-date {
+  margin: 0.2rem 0 0;
+  color: #6a6058;
+  font-size: 0.78rem;
+}
+
+.remove-btn {
+  margin: 0;
+  padding: 0.42rem 0.72rem;
+  justify-self: end;
+}
+
+.delete-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(22, 19, 23, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.delete-confirm-modal {
+  width: min(360px, 94vw);
+  border-radius: 16px;
+  border: 1px solid rgba(146, 136, 192, 0.35);
+  padding: 1rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(248, 245, 255, 0.94));
+  box-shadow: 0 16px 36px rgba(35, 29, 46, 0.34);
+  text-align: center;
+}
+
+.delete-confirm-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 18px rgba(31, 27, 44, 0.24);
+}
+
+.delete-confirm-modal h4 {
+  margin: 0.65rem 0 0;
+  font-size: 1.2rem;
+  color: #594e47;
+}
+
+.delete-confirm-modal p {
+  margin: 0.38rem 0 0;
+  color: #675c55;
+  font-size: 0.9rem;
+}
+
+.delete-confirm-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-confirm-delete,
+.btn-cancel-delete {
+  margin: 0;
+  width: auto;
+  min-width: 118px;
+  border: none;
+  border-radius: 999px;
+  padding: 0.62rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-confirm-delete {
+  background: linear-gradient(135deg, #9c4c38, #bf6650);
+  color: #fff;
+}
+
+.btn-cancel-delete {
+  background: rgba(95, 127, 99, 0.12);
+  color: #435946;
+  border: 1px solid rgba(95, 127, 99, 0.22);
+}
+
+.drive-access-card {
+  margin-top: 1rem;
+  border: 1px solid rgba(100, 131, 102, 0.22);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(243, 250, 242, 0.84));
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+}
+
+.drive-access-card p {
+  margin: 0;
+  font-size: clamp(1.2rem, 3.4vw, 1.6rem);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #4d4540;
+  text-align: center;
+}
+
+.drive-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  padding: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.drive-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(42, 73, 46, 0.15);
+}
+
+.drive-icon {
+  width: min(90px, 30vw);
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .guest-photos {
+    padding: 0.8rem;
+    border-radius: 14px;
+  }
+
+  .upload-card {
+    padding: 0.75rem;
+  }
+
+  .dropzone {
+    padding: 0.95rem 0.72rem;
+  }
+}

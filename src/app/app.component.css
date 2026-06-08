@@ -1,0 +1,219 @@
+﻿:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.music-controls {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.music-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(95, 127, 99, 0.3);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(6px);
+}
+
+.music-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+
+.music-block {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(185, 111, 136, 0.3);
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(6px);
+}
+
+.music-block:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.16);
+}
+
+.site-shell {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  position: relative;
+  min-height: clamp(340px, 52vh, 560px);
+  padding: 1rem 1.2rem;
+  background-image:
+    linear-gradient(180deg, rgba(10, 15, 20, 0.2), rgba(10, 15, 20, 0.3)),
+    url('/assets/img/FondoInicio/Fondo1.avif');
+  background-position: center center, center 12%;
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+@media (max-width: 1100px) {
+  .site-header {
+    min-height: clamp(360px, 50vh, 520px);
+    background-position: center center, center 16%;
+  }
+}
+
+.brand {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  letter-spacing: 0.04em;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.title-block {
+  align-self: center;
+  max-width: 760px;
+  padding: 1.1rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(150deg, rgba(24, 29, 34, 0.45), rgba(24, 29, 34, 0.26));
+  text-align: center;
+  backdrop-filter: blur(1px);
+  animation: fadeUp 620ms ease-out both;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.title-block h1 {
+  margin: 0.25rem 0 0.2rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 6.2vw, 3.8rem);
+  line-height: 1.05;
+  color: #fff;
+}
+
+.hero-meta {
+  margin: 0.2rem 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-view {
+  flex: 1;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.9), rgba(246, 251, 245, 0.82));
+  box-shadow: none;
+  padding: 1rem;
+}
+
+@media (max-width: 780px) {
+  .site-header {
+    min-height: 360px;
+    padding: 0.9rem 0.8rem;
+    background-position: center center, center 20%;
+    background-size: cover, cover;
+    align-items: flex-end;
+  }
+
+  .title-block {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    min-height: 300px;
+    padding: 0.6rem 0.7rem;
+    background-position: center center, center 24%;
+    background-size: cover, cover;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .site-header {
+    min-height: 320px;
+    background-position: center center, center 16%;
+    background-size: cover, cover;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    min-height: 275px;
+    padding: 0.45rem 0.55rem;
+    background-position: center center, center 28%;
+    background-size: cover, cover;
+  }
+
+  .page-view {
+    padding: 0.5rem;
+  }
+
+  .title-block {
+    padding: 0.75rem 0.8rem;
+  }
+
+  .title-block h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-meta {
+    font-size: 0.82rem;
+  }
+
+  .music-controls {
+    bottom: 0.8rem;
+    right: 0.8rem;
+  }
+
+  .music-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .music-block {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.95rem;
+  }
+}

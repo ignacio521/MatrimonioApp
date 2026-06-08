@@ -1,0 +1,109 @@
+﻿<section class="venue">
+  <p class="eyebrow">Lugar de la boda</p>
+  <h2>Centro de Eventos Aires del Maipo</h2>
+  <p class="lead">Avenida Concha y Toro 01340, Pirque. Recomendamos llegar 20 minutos antes.</p>
+
+  <div class="venue-layout">
+    <section class="map-panel" aria-label="Mapa del evento">
+      <iframe
+        class="venue-map"
+        title="Mapa del evento"
+        [src]="directionsEmbedUrl"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+
+      <form class="route-form" (ngSubmit)="updateRoute()">
+        <label for="origin">Tu direccion</label>
+        <input
+          id="origin"
+          name="origin"
+          type="text"
+          [(ngModel)]="userOrigin"
+          placeholder="Ej: Puente Alto, Santiago"
+        />
+
+        <div class="route-actions">
+          <button type="submit">Ver en el mapa</button>
+          <a [href]="directionsUrl" target="_blank" rel="noopener">Calcular tiempo estimado</a>
+        </div>
+      </form>
+    </section>
+
+    <div class="timeline">
+      <article *ngFor="let item of schedule">
+        <time>{{ item.hour }}</time>
+        <div>
+          <h3>{{ item.event }}</h3>
+          <p>{{ item.place }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <section class="venue-carousel" aria-label="Galeria del lugar">
+    <h3>Galeria del lugar</h3>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" type="button" (click)="prevPhoto()" aria-label="Anterior">‹</button>
+
+      <div class="carousel-track">
+        <img
+          *ngFor="let photo of venuePhotos; let i = index"
+          [src]="photo.src"
+          [alt]="photo.alt"
+          [class.active]="i === carouselIndex"
+          [class.prev-slide]="i === prevIndex"
+          loading="lazy"
+        />
+      </div>
+
+      <button class="carousel-btn next" type="button" (click)="nextPhoto()" aria-label="Siguiente">›</button>
+    </div>
+
+    <div class="carousel-dots">
+      <button
+        *ngFor="let photo of venuePhotos; let i = index"
+        class="dot"
+        [class.active]="i === carouselIndex"
+        (click)="goToPhoto(i)"
+        type="button"
+        [attr.aria-label]="'Ir a foto ' + (i + 1)"
+      ></button>
+    </div>
+
+    <p class="carousel-counter">{{ carouselIndex + 1 }} / {{ venuePhotos.length }}</p>
+  </section>
+
+  <section class="dress-code" aria-label="Codigo de vestimenta">
+    <h3>Codigo de vestimenta</h3>
+    <p class="dress-lead">✨ Estilo sugerido: <strong>elegante semiformal</strong> en tonos suaves.</p>
+
+    <div class="dress-grid">
+      <article class="dress-card female-card" aria-label="Vestimenta mujer">
+        <div class="dress-icon" role="img" aria-label="Basset hound formal mujer">
+          <img src="/assets/img/Luki/Muj.png" alt="Basset hound formal mujer" loading="lazy" />
+        </div>
+        <h4>👗</h4>
+        <ul class="dress-list">
+          <li>Vestido midi o largo</li>
+          <li>Conjunto elegante o enterito de fiesta</li>
+        </ul>
+        <p class="dress-note">🚫 Evitar blanco pleno para destacar a la novia.</p>
+      </article>
+
+      <article class="dress-card male-card" aria-label="Vestimenta hombre">
+        <div class="dress-icon" role="img" aria-label="Basset hound formal hombre">
+          <img src="/assets/img/Luki/Var.png" alt="Basset hound formal hombre" loading="lazy" />
+        </div>
+        <h4>🤵</h4>
+        <ul class="dress-list">
+          <li>Traje o blazer con pantalon de vestir</li>
+          <li>Zapatos formales</li>
+        </ul>
+        <p class="dress-note">👔 Corbata opcional, pero recomendada para la ceremonia.</p>
+      </article>
+    </div>
+
+    <p class="dress-footer">¡Vengan cómodos y elegantes, que la noche va a ser larga! 🥂</p>
+  </section>
+</section>

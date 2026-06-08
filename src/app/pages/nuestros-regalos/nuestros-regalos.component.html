@@ -1,0 +1,88 @@
+<section class="gifts">
+  <p class="eyebrow">Nuestros regalos</p>
+  <h2>Esta es nuestra lista de sueños que preparamos con mucho amor y cariño</h2>
+  <p class="lead">Te invitamos a ser parte de nuestra celebración ayudándonos a cumplir nuestros deseos.</p>
+  <p class="lead-note">💡 Los valores son un estimado. Si deseas hacer otro aporte, ¡será todo recibido con mucho amor!</p>
+
+  <div class="libre-aporte">
+    <button type="button" class="btn-libre-aporte" (click)="openLibreAporte()">💛 Hacer un aporte libre</button>
+  </div>
+
+  <div class="gift-columns">
+    <section class="gift-list-panel alt">
+      <h3>✨ Luna de miel con Luki</h3>
+      <p class="panel-lead">Aportes para nuestro viaje de luna de miel junto a nuestro basset hound, Luki.</p>
+
+      <article
+        class="gift-row"
+        *ngFor="let gift of celebrationGifts"
+        [class.selected]="selectedGift?.id === gift.id"
+        (click)="selectGift(gift)"
+      >
+        <span class="gift-icon" aria-hidden="true">
+          <img class="gift-icon-image" [src]="giftImage(gift)" alt="" loading="lazy" />
+        </span>
+        <div class="gift-content">
+          <h4>{{ gift.name }}</h4>
+        </div>
+        <span class="price">${{ gift.price }}</span>
+      </article>
+    </section>
+  </div>
+
+  <div class="gift-popup-backdrop" *ngIf="showGiftPopup" (click)="closeGiftPopup()">
+    <section class="gift-popup" (click)="$event.stopPropagation()" aria-modal="true" role="dialog">
+      <button type="button" class="popup-close" (click)="closeGiftPopup()" aria-label="Cerrar">×</button>
+
+      <ng-container *ngIf="giftPopupStep === 'confirm' && selectedGift">
+        <p class="popup-eyebrow">Regalo seleccionado</p>
+        <h3>{{ selectedGift.name }}</h3>
+        <p class="popup-price">Monto sugerido: ${{ selectedGift.price }}</p>
+        <p class="popup-copy">¿Quieres continuar con este regalo?</p>
+
+        <div class="popup-actions">
+          <button type="button" class="btn-transfer" (click)="confirmGiftSelection()">Si, estoy seguro</button>
+          <button type="button" class="btn-secondary" (click)="resetGiftSelection()">Elegir otro</button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="giftPopupStep === 'transfer' && !selectedGift">
+        <p class="popup-eyebrow">Aporte libre</p>
+        <h3>¡Gracias por tu generosidad!</h3>
+        <img class="popup-luki" src="/assets/img/Luki/Luki1.png" alt="Luki agradeciendo" />
+        <div class="transfer-card">
+          <p><strong>Banco:</strong> {{ transferData.bank }}</p>
+          <p><strong>Tipo de cuenta:</strong> {{ transferData.type }}</p>
+          <p><strong>Titular:</strong> {{ transferData.holder }}</p>
+          <p><strong>Número de cuenta:</strong> {{ transferData.accountNumber }}</p>
+          <p><strong>Correo:</strong> {{ transferData.email }}</p>
+          <p><strong>RUT:</strong> {{ transferData.rut }}</p>
+        </div>
+        <div class="popup-actions">
+          <button type="button" class="btn-transfer" (click)="closeGiftPopup()">Listo, gracias</button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="giftPopupStep === 'transfer' && selectedGift">
+        <p class="popup-eyebrow">Transferencia</p>
+        <h3>Muchas gracias por tu regalo</h3>
+
+        <img class="popup-luki" [src]="lukiImagePath" alt="Luki agradeciendo" />
+
+        <div class="transfer-card">
+          <p><strong>Banco:</strong> {{ transferData.bank }}</p>
+          <p><strong>Tipo de cuenta:</strong> {{ transferData.type }}</p>
+          <p><strong>Titular:</strong> {{ transferData.holder }}</p>
+          <p><strong>Número de cuenta:</strong> {{ transferData.accountNumber }}</p>
+          <p><strong>Correo:</strong> {{ transferData.email }}</p>
+          <p><strong>RUT:</strong> {{ transferData.rut }}</p>
+          <p><strong>Referencia:</strong> {{ selectedGift.name }} - ${{ selectedGift.price }}</p>
+        </div>
+
+        <div class="popup-actions">
+          <button type="button" class="btn-transfer" (click)="closeGiftPopup()">Listo, gracias</button>
+        </div>
+      </ng-container>
+    </section>
+  </div>
+</section>

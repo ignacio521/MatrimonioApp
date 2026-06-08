@@ -1,0 +1,91 @@
+<section class="confirmation">
+  <p class="eyebrow">Confirmacion de boda</p>
+  <h2>Confirmanos tu asistencia</h2>
+  <p class="lead">Tu respuesta queda guardada en esta app, incluso si recargas la pagina.</p>
+
+  <div class="confirmation-layout">
+    <form class="confirm-form" (ngSubmit)="registerGuest()">
+      <label for="fullName">Nombre y apellido</label>
+      <input
+        id="fullName"
+        name="fullName"
+        type="text"
+        [(ngModel)]="fullName"
+        placeholder="Ej: Ana Perez"
+        required
+      />
+
+      <label for="attendance">Asistencia</label>
+      <select id="attendance" name="attendance" [(ngModel)]="attendance">
+        <option value="si">Si, asisto</option>
+        <option value="no">No podre asistir</option>
+      </select>
+
+      <label for="dietaryNotes">Alergias o comentarios (opcional)</label>
+      <textarea
+        id="dietaryNotes"
+        name="dietaryNotes"
+        rows="3"
+        [(ngModel)]="dietaryNotes"
+        placeholder="Ej: Vegetariano, sin gluten"
+      ></textarea>
+
+      <button type="submit">Guardar confirmacion</button>
+
+      <div
+        class="submit-feedback"
+        *ngIf="showSubmitFeedback"
+        [class.sad]="submitFeedbackAttendance === 'no'"
+        role="status"
+        aria-live="polite"
+      >
+        <span class="submit-feedback-icon" aria-hidden="true">{{ submitFeedbackIcon }}</span>
+        <span>
+          {{ submitFeedbackAttendance === 'si' ? 'Confirmacion guardada. Que alegria tenerte con nosotros.' : 'Confirmacion guardada. Te vamos a extrañar en este dia.' }}
+        </span>
+      </div>
+    </form>
+
+    <section class="registered-list" aria-label="Invitados registrados">
+      <h3>Confirmaciones ({{ registrations.length }})</h3>
+
+      <p class="empty" *ngIf="registrations.length === 0">Aun no hay confirmaciones guardadas.</p>
+
+      <article class="guest-card" *ngFor="let item of registrations">
+        <div class="guest-icon" [style.background]="item.color" [attr.aria-label]="'Icono de ' + item.fullName">
+          {{ item.icon }}
+        </div>
+
+        <div class="guest-content">
+          <p class="guest-name">{{ item.fullName }}</p>
+          <p class="guest-meta">{{ item.attendance === 'si' ? 'Asiste' : 'No asiste' }}</p>
+          <p class="guest-note" *ngIf="item.dietaryNotes">{{ item.dietaryNotes }}</p>
+        </div>
+
+        <button type="button" class="remove" (click)="removeRegistration(item.id)">Quitar</button>
+      </article>
+    </section>
+  </div>
+
+  <div
+    class="attendance-image-layer"
+    *ngIf="showAttendanceImage"
+    [class.left]="attendanceImageSide === 'left'"
+    [class.right]="attendanceImageSide === 'right'"
+    aria-hidden="true"
+  >
+    <img [src]="attendanceImagePath" alt="" />
+  </div>
+
+  <div class="delete-confirm-backdrop" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+    <section class="delete-confirm-modal" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+      <img class="delete-confirm-thumb" [src]="deleteConfirmImagePath" alt="Foto decorativa" />
+      <h4>Estas seguro?</h4>
+      <p>Si eliges "Si, borrar" se eliminara este registro.</p>
+      <div class="delete-confirm-actions">
+        <button type="button" class="btn-confirm-delete" (click)="confirmDelete()">Si, borrar</button>
+        <button type="button" class="btn-cancel-delete" (click)="cancelDelete()">No</button>
+      </div>
+    </section>
+  </div>
+</section>
