@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 export interface GuestRegistration {
@@ -27,13 +27,21 @@ export class WeddingDataService {
   private readonly basePath = '/api';
   private readonly localRegistrationsKey = 'matrimonio.confirmaciones';
   private readonly localSongsKey = 'matrimonio.canciones';
+  private readonly isLocalhost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
   constructor(private readonly http: HttpClient) {}
 
   getRegistrations(): Observable<GuestRegistration[]> {
     return this.http.get<GuestRegistration[]>(`${this.basePath}/confirmaciones`).pipe(
       tap(registrations => this.writeLocal(this.localRegistrationsKey, registrations)),
-      catchError(() => of(this.readLocal<GuestRegistration>(this.localRegistrationsKey)))
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
+        return of(this.readLocal<GuestRegistration>(this.localRegistrationsKey));
+      })
     );
   }
 
@@ -45,7 +53,10 @@ export class WeddingDataService {
         items.unshift(saved);
         this.writeLocal(this.localRegistrationsKey, items);
       }),
-      catchError(() => {
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
         const items = this.readLocal<GuestRegistration>(this.localRegistrationsKey)
           .filter(item => item.id !== registration.id);
         items.unshift(registration);
@@ -62,7 +73,10 @@ export class WeddingDataService {
           .filter(item => item.id !== id);
         this.writeLocal(this.localRegistrationsKey, items);
       }),
-      catchError(() => {
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
         const items = this.readLocal<GuestRegistration>(this.localRegistrationsKey)
           .filter(item => item.id !== id);
         this.writeLocal(this.localRegistrationsKey, items);
@@ -74,7 +88,12 @@ export class WeddingDataService {
   getMusicSuggestions(): Observable<MusicSuggestion[]> {
     return this.http.get<MusicSuggestion[]>(`${this.basePath}/canciones`).pipe(
       tap(suggestions => this.writeLocal(this.localSongsKey, suggestions)),
-      catchError(() => of(this.readLocal<MusicSuggestion>(this.localSongsKey)))
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
+        return of(this.readLocal<MusicSuggestion>(this.localSongsKey));
+      })
     );
   }
 
@@ -86,7 +105,10 @@ export class WeddingDataService {
         items.unshift(saved);
         this.writeLocal(this.localSongsKey, items);
       }),
-      catchError(() => {
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
         const items = this.readLocal<MusicSuggestion>(this.localSongsKey)
           .filter(item => item.id !== suggestion.id);
         items.unshift(suggestion);
@@ -103,7 +125,10 @@ export class WeddingDataService {
           .filter(item => item.id !== id);
         this.writeLocal(this.localSongsKey, items);
       }),
-      catchError(() => {
+      catchError(error => {
+        if (!this.isLocalhost) {
+          return throwError(() => error);
+        }
         const items = this.readLocal<MusicSuggestion>(this.localSongsKey)
           .filter(item => item.id !== id);
         this.writeLocal(this.localSongsKey, items);
