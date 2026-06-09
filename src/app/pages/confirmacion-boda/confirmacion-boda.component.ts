@@ -1,14 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
-interface GuestRegistration {
-  id: string;
-  fullName: string;
-  dietaryNotes: string;
-  attendance: 'si' | 'no';
-  icon: string;
-  color: string;
-  createdAt: string;
-}
+import { WeddingDataService, GuestRegistration } from '../../services/wedding-data.service';
 
 @Component({
   selector: 'app-confirmacion-boda',
@@ -16,7 +7,6 @@ interface GuestRegistration {
   styleUrls: ['./confirmacion-boda.component.css']
 })
 export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
-  private readonly storageKey = 'matrimonio.confirmaciones';
   private readonly colorSet = ['#f2d3c2', '#d8e7cf', '#fde7b7', '#d7d9f7', '#f5cfd4', '#cbe5e8'];
   readonly deleteConfirmImagePath = '/assets/img/FotosParaCards/PHOTO-2026-06-02-11-14-21 (1).jpg';
   readonly lukiImageYesPath = '/assets/img/Luki/Luki1.png';
@@ -35,6 +25,8 @@ export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
   attendanceImageSide: 'left' | 'right' = 'right';
   attendanceImagePath = this.lukiImageYesPath;
   showDeleteConfirm = false;
+
+  constructor(private readonly weddingDataService: WeddingDataService) {}
 
   ngOnInit(): void {
     this.loadRegistrations();
@@ -67,7 +59,14 @@ export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
     };
 
     this.registrations = [registration, ...this.registrations];
-    this.persistRegistrations();
+    this.weddingDataService.addRegistration(registration).subscribe({
+      next: saved => {
+        this.registrations = [saved, ...this.registrations.filter(item => item.id !== saved.id)];
+      },
+      error: () => {
+        this.registrations = this.registrations.filter(item => item.id !== registration.id);
+      }
+    });
     this.launchSubmitFeedback(this.attendance);
     this.resetForm();
   }
@@ -88,8 +87,13 @@ export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.registrations = this.registrations.filter(item => item.id !== this.pendingDeleteId);
-    this.persistRegistrations();
+    const deletingId = this.pendingDeleteId;
+    this.registrations = this.registrations.filter(item => item.id !== deletingId);
+    this.weddingDataService.deleteRegistration(deletingId).subscribe({
+      error: () => {
+        this.loadRegistrations();
+      }
+    });
     this.cancelDelete();
   }
 
@@ -100,28 +104,22 @@ export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
   }
 
   private loadRegistrations(): void {
-    const rawData = localStorage.getItem(this.storageKey);
-    if (!rawData) {
-      this.registrations = [];
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(rawData) as Array<Partial<GuestRegistration>>;
-      this.registrations = parsed.map(item => ({
-        id: item.id ?? '',
-        fullName: item.fullName ?? '',
-        dietaryNotes: item.dietaryNotes ?? '',
-        attendance: item.attendance === 'no' ? 'no' : 'si',
-        icon:
-          item.icon ??
-          ((item.attendance === 'no' ? 'no' : 'si') === 'si' ? '😊' : '😢'),
-        color: item.color ?? '#f2d3c2',
-        createdAt: item.createdAt ?? new Date().toISOString()
-      }));
-    } catch {
-      this.registrations = [];
-    }
+    this.weddingDataService.getRegistrations().subscribe({
+      next: registrations => {
+        this.registrations = registrations.map(item => ({
+          id: item.id,
+          fullName: item.fullName,
+          dietaryNotes: item.dietaryNotes,
+          attendance: item.attendance === 'no' ? 'no' : 'si',
+          icon: item.attendance === 'si' ? '😊' : '😢',
+          color: item.color,
+          createdAt: item.createdAt
+        }));
+      },
+      error: () => {
+        this.registrations = [];
+      }
+    });
   }
 
   private launchSubmitFeedback(attendance: 'si' | 'no'): void {
@@ -146,10 +144,6 @@ export class ConfirmacionBodaComponent implements OnInit, OnDestroy {
       this.showAttendanceImage = false;
       this.feedbackTimer = null;
     }, 3000);
-  }
-
-  private persistRegistrations(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.registrations));
   }
 
   private hashCode(value: string): number {

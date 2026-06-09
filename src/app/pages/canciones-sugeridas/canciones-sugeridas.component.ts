@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-interface MusicSuggestion {
-  id: string;
-  title: string;
-  artist: string;
-  createdAt: string;
-}
+import { WeddingDataService, MusicSuggestion } from '../../services/wedding-data.service';
 
 @Component({
   selector: 'app-canciones-sugeridas',
@@ -13,7 +7,6 @@ interface MusicSuggestion {
   styleUrls: ['./canciones-sugeridas.component.css']
 })
 export class CancionesSugeridasComponent implements OnInit {
-  private readonly musicStorageKey = 'matrimonio.canciones';
   readonly deleteConfirmImagePath = '/assets/img/FotosParaCards/PHOTO-2026-06-02-11-14-21 (1).jpg';
   private pendingDeleteId: string | null = null;
 
@@ -22,6 +15,8 @@ export class CancionesSugeridasComponent implements OnInit {
   musicSuggestions: MusicSuggestion[] = [];
   musicFormError = '';
   showDeleteConfirm = false;
+
+  constructor(private readonly weddingDataService: WeddingDataService) {}
 
   ngOnInit(): void {
     this.loadMusicSuggestions();
@@ -47,7 +42,14 @@ export class CancionesSugeridasComponent implements OnInit {
     };
 
     this.musicSuggestions = [suggestion, ...this.musicSuggestions];
-    this.persistMusicSuggestions();
+    this.weddingDataService.addMusicSuggestion(suggestion).subscribe({
+      next: saved => {
+        this.musicSuggestions = [saved, ...this.musicSuggestions.filter(item => item.id !== saved.id)];
+      },
+      error: () => {
+        this.musicSuggestions = this.musicSuggestions.filter(item => item.id !== suggestion.id);
+      }
+    });
     this.resetMusicForm();
   }
 
@@ -67,35 +69,32 @@ export class CancionesSugeridasComponent implements OnInit {
       return;
     }
 
-    this.musicSuggestions = this.musicSuggestions.filter(item => item.id !== this.pendingDeleteId);
-    this.persistMusicSuggestions();
+    const deletingId = this.pendingDeleteId;
+    this.musicSuggestions = this.musicSuggestions.filter(item => item.id !== deletingId);
+    this.weddingDataService.deleteMusicSuggestion(deletingId).subscribe({
+      error: () => {
+        this.loadMusicSuggestions();
+      }
+    });
     this.cancelDelete();
   }
 
   private loadMusicSuggestions(): void {
-    const rawData = localStorage.getItem(this.musicStorageKey);
-    if (!rawData) {
-      this.musicSuggestions = [];
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(rawData) as Array<Partial<MusicSuggestion>>;
-      this.musicSuggestions = parsed
-        .filter(item => typeof item.title === 'string' && item.title.trim().length > 0)
-        .map(item => ({
-          id: item.id ?? `${Date.now()}-${Math.abs(this.hashCode(item.title ?? ''))}`,
-          title: (item.title ?? '').trim(),
-          artist: (item.artist ?? '').trim(),
-          createdAt: item.createdAt ?? new Date().toISOString()
-        }));
-    } catch {
-      this.musicSuggestions = [];
-    }
-  }
-
-  private persistMusicSuggestions(): void {
-    localStorage.setItem(this.musicStorageKey, JSON.stringify(this.musicSuggestions));
+    this.weddingDataService.getMusicSuggestions().subscribe({
+      next: suggestions => {
+        this.musicSuggestions = suggestions
+          .filter(item => typeof item.title === 'string' && item.title.trim().length > 0)
+          .map(item => ({
+            id: item.id,
+            title: item.title.trim(),
+            artist: item.artist.trim(),
+            createdAt: item.createdAt
+          }));
+      },
+      error: () => {
+        this.musicSuggestions = [];
+      }
+    });
   }
 
   private resetMusicForm(): void {
